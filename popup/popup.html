@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>YT Subscription Guard - 訂閱防線</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- 頂部 Header -->
+    <header class="popup-header">
+      <div class="brand">
+        <span class="shield-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6z"/></svg></span>
+        <div class="title-group">
+          <h1>訂閱防線</h1>
+          <span class="subtitle">YT Subscription Guard</span>
+        </div>
+      </div>
+      <button id="go-to-options" class="options-btn" title="打開設定中心"><svg class="icon" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
+    </header>
+
+    <!-- 分頁過濾列 -->
+    <nav class="popup-nav">
+      <button class="nav-btn active" data-tab="focus"><svg class="icon" viewBox="0 0 24 24" style="color: #eab308; fill: #eab308; stroke: #eab308; vertical-align: -2.5px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 核心置頂</button>
+      <button class="nav-btn" data-tab="secondary"><svg class="icon" viewBox="0 0 24 24" style="vertical-align: -2.5px;"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> 次要關注</button>
+      <button class="nav-btn" data-tab="unread">
+        <svg class="icon" viewBox="0 0 24 24" style="vertical-align: -2.5px;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> 未讀新片 <span class="badge" id="unread-badge" style="display: none;">0</span>
+      </button>
+    </nav>
+
+    <!-- 影片列表主要滾動區 -->
+    <main class="video-feed" id="video-feed-container">
+      <!-- 影片卡片範例 (動態生成) -->
+      <!-- 如果沒有影片時顯示 Placeholder -->
+      <div class="feed-placeholder" id="feed-placeholder">
+        <div class="placeholder-icon">📺</div>
+        <p>目前防線中尚無新影片</p>
+        <span>請前往設定新增您關注的 YouTube 頻道</span>
+      </div>
+    </main>
+
+    <!-- 底部功能列 -->
+    <footer class="popup-footer">
+      <div class="sync-info">
+        <span class="pulse-dot"></span>
+        <span id="sync-status-text">防線守護中</span>
+      </div>
+      <button id="popup-sync-btn" class="sync-btn" title="手動立即拉取 RSS 影片">🔄 同步</button>
+    </footer>
+  </div>
+  <!-- 引入彈出面板控制邏輯腳本 -->
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YT Subscription Guard - 設定中心</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- 側邊導覽列 -->
+    <aside class="sidebar">
+      <div class="logo-area">
+        <div class="logo-icon">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6z"/></svg>
+        </div>
+        <div class="logo-text">
+          <h1>YT Guard</h1>
+          <span>訂閱防線</span>
+        </div>
+      </div>
+      
+      <nav class="side-nav">
+        <button class="nav-item active" data-tab="channels-tab">
+          <span class="nav-icon"><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg></span> 頻道關注名單
+        </button>
+        <button class="nav-item" data-tab="settings-tab">
+          <span class="nav-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span> 系統運作設定
+        </button>
+        <button class="nav-item" data-tab="backup-tab">
+          <span class="nav-icon"><svg class="icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg></span> 備份與還原
+        </button>
+      </nav>
+
+      <div class="sync-status-box">
+        <div class="status-indicator">
+          <span class="status-dot green"></span>
+          <span class="status-title">守護進行中</span>
+        </div>
+        <div class="sync-time">上次同步：<span id="last-sync-time">讀取中...</span></div>
+        <button id="sync-now-btn" class="btn btn-secondary btn-sm"><svg class="icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg> 立即手動同步</button>
+      </div>
+    </aside>
+
+    <!-- 主要內容區 -->
+    <main class="main-content">
+      <!-- 頻道關注名單分頁 -->
+      <section id="channels-tab" class="tab-content active">
+        <div class="section-header">
+          <h2>頻道關注管理</h2>
+          <p class="section-desc">在此新增您最關心、最不想漏掉的 YouTube 頻道。跳過演算法，直接獲取他們的最新影片。</p>
+        </div>
+
+        <!-- 新增頻道輸入區 -->
+        <div class="card add-channel-card">
+          <h3><svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增關注頻道</h3>
+          <form id="add-channel-form" class="add-channel-form">
+            <div class="input-group">
+              <input type="text" id="channel-url-input" placeholder="請輸入 YouTube 頻道網址或 Handle，例如：@Geekyranjit 或 https://www.youtube.com/@MrBeast" required autocomplete="off">
+              <button type="submit" id="add-btn" class="btn btn-primary">解析並新增</button>
+              <button type="button" id="auto-import-btn" class="btn btn-secondary"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> 一鍵自動匯入</button>
+            </div>
+            <div id="add-status" class="status-message"></div>
+          </form>
+        </div>
+
+        <!-- 雙分流列表 -->
+        <div class="channels-grid">
+          <!-- 核心關注 Tier 1 -->
+          <div class="card list-card focus-card">
+            <div class="list-header">
+              <h3><svg class="icon" viewBox="0 0 24 24" style="color: #eab308; fill: #eab308; stroke: #eab308;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 核心關注 (Tier 1)</h3>
+              <span class="badge badge-focus" id="focus-count">0</span>
+            </div>
+            <p class="list-desc">此名單內的影片將**置頂插入首頁最上方、側邊欄**，並在發布新影片時**發送桌面通知**。</p>
+            
+            <!-- 批次操作列 -->
+            <div class="batch-bar" id="focus-batch-bar" style="display: none;">
+              <label class="checkbox-container select-all-label">
+                <input type="checkbox" id="focus-select-all">
+                <span class="checkbox-custom"></span>
+                全選
+              </label>
+              <div class="batch-btns">
+                <button class="btn btn-secondary btn-sm" id="focus-batch-move-btn" title="批量移至次要關注"><svg class="icon" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="15"/></svg> 移至次要</button>
+                <button class="btn btn-danger btn-sm" id="focus-batch-delete-btn" title="批量取消關注"><svg class="icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg> 刪除</button>
+              </div>
+            </div>
+
+            <div class="channel-list" id="focus-list">
+              <!-- 動態生成 -->
+              <div class="empty-placeholder">目前尚無核心關注頻道，請於上方新增。</div>
+            </div>
+          </div>
+
+          <!-- 次要關注 Tier 2 -->
+          <div class="card list-card secondary-card">
+            <div class="list-header">
+              <h3><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> 次要關注 (Tier 2)</h3>
+              <span class="badge badge-secondary" id="secondary-count">0</span>
+            </div>
+            <p class="list-desc">此名單內的影片將整合在彈出視窗（Popup）及次要影片清單中，**不會觸發桌面通知與首頁置頂**。</p>
+            
+            <!-- 批次操作列 -->
+            <div class="batch-bar" id="secondary-batch-bar" style="display: none;">
+              <label class="checkbox-container select-all-label">
+                <input type="checkbox" id="secondary-select-all">
+                <span class="checkbox-custom"></span>
+                全選
+              </label>
+              <div class="batch-btns">
+                <button class="btn btn-secondary btn-sm" id="secondary-batch-move-btn" title="批量升為核心關注"><svg class="icon" viewBox="0 0 24 24" style="color: #eab308; fill: #eab308; stroke: #eab308;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 移至核心</button>
+                <button class="btn btn-danger btn-sm" id="secondary-batch-delete-btn" title="批量取消關注"><svg class="icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg> 刪除</button>
+              </div>
+            </div>
+
+            <div class="channel-list" id="secondary-list">
+              <!-- 動態生成 -->
+              <div class="empty-placeholder">目前尚無次要關注頻道，請於上方新增。</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 系統運作設定分頁 -->
+      <section id="settings-tab" class="tab-content">
+        <div class="section-header">
+          <h2>系統運作設定</h2>
+          <p class="section-desc">自訂擴充功能的背景同步頻率、通知提醒與 YouTube 畫面注入設定。</p>
+        </div>
+
+        <div class="card settings-card">
+          <!-- 設定群組 1：背景同步 -->
+          <div class="settings-group">
+            <h3><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 背景同步間隔</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <label for="sync-interval">同步時間間隔</label>
+                <p>設定背景 Service Worker 輪詢各頻道 RSS 訂閱源的頻率。</p>
+              </div>
+              <div class="setting-control">
+                <select id="sync-interval" class="form-select">
+                  <option value="15">每 15 分鐘 (極速)</option>
+                  <option value="30">每 30 分鐘 (推薦)</option>
+                  <option value="60">每 1 小時</option>
+                  <option value="120">每 2 小時</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 設定群組 2：推播通知 -->
+          <div class="settings-group">
+            <h3><svg class="icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> 推播與提示</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>啟用桌面推播通知</h4>
+                <p>當「⭐ 核心關注 (Tier 1)」頻道上架新影片時，在 Windows 右下角發出系統提醒。</p>
+              </div>
+              <div class="setting-control">
+                <label class="switch">
+                  <input type="checkbox" id="enable-notifications">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 設定群組 2.5：防線展示策略 -->
+          <div class="settings-group">
+            <h3><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg> 防線展示策略設定</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>影片時間跨度限制</h4>
+                <p>只展示最近 N 天內發布的影片，過期影片將自動從置頂區塊隱藏。</p>
+              </div>
+              <div class="setting-control">
+                <div style="display: flex; align-items: center;">
+                  <input type="number" id="settings-max-video-age" class="form-select text-center" min="1" max="90" style="width: 80px; padding: 6px;" value="7">
+                  <span style="font-size: 0.85rem; color: #aaa; margin-left: 8px;">天內</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>單一頻道影片上限</h4>
+                <p>每個訂閱頻道在防線中預設最多展示的最新影片數量，防止活躍頻道洗版。</p>
+              </div>
+              <div class="setting-control">
+                <div style="display: flex; align-items: center;">
+                  <input type="number" id="settings-max-videos-per-channel" class="form-select text-center" min="1" max="10" style="width: 80px; padding: 6px;" value="3">
+                  <span style="font-size: 0.85rem; color: #aaa; margin-left: 8px;">部影片</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 設定群組 3：YouTube 介面注入 -->
+          <div class="settings-group">
+            <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> YouTube UI 注入設定</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>啟用 YouTube 首頁「置頂防線專區」</h4>
+                <p>在 YouTube 首頁橫幅下方、原生影片網格上方，強行注入一欄以 Bento Grid 排版的「核心關注」新片，徹底繞過首頁演算法推薦。</p>
+              </div>
+              <div class="setting-control">
+                <label class="switch">
+                  <input type="checkbox" id="enable-homepage-injection">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>啟用 YouTube 影片播放頁「側邊欄置頂」</h4>
+                <p>當您在播放任何影片時，將核心頻道的最新精選影片插入到右側推薦清單的最頂部，阻絕演算法的誘惑。</p>
+              </div>
+              <div class="setting-control">
+                <label class="switch">
+                  <input type="checkbox" id="enable-sidebar-injection">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-actions">
+            <button id="save-settings-btn" class="btn btn-primary"><svg class="icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> 儲存並套用設定</button>
+            <span id="settings-status" class="status-message"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 備份與還原分頁 -->
+      <section id="backup-tab" class="tab-content">
+        <div class="section-header">
+          <h2>設定備份與數據還原</h2>
+          <p class="section-desc">備份您的關注頻道列表與系統配置，或在更換電腦、重新安裝時進行還原。</p>
+        </div>
+
+        <div class="card backup-card">
+          <div class="backup-grid">
+            <div class="backup-action-box">
+              <h3><svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> 匯出備份資料</h3>
+              <p>將目前設定的核心頻道、次要頻道與運作參數匯出為 JSON 檔案，以供日後還原或移轉。</p>
+              <button id="export-btn" class="btn btn-secondary"><svg class="icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg> 匯出設定檔 (.json)</button>
+            </div>
+            
+            <div class="backup-action-box">
+              <h3><svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 匯入還原資料</h3>
+              <p>選擇先前匯出的 JSON 設定檔，將其匯入本機中。這將會**覆蓋目前**的所有關注清單與設定！</p>
+              <div class="file-upload-wrapper">
+                <input type="file" id="import-file" accept=".json" style="display: none;">
+                <button id="import-trigger-btn" class="btn btn-secondary"><svg class="icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> 選擇 JSON 檔案並匯入</button>
+              </div>
+              <div id="import-status" class="status-message"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card danger-card">
+          <h3><svg class="icon" viewBox="0 0 24 24" style="color: var(--danger);"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 危險區域</h3>
+          <p>此動作將會清除所有快取的影片記錄與關注頻道，重設為初始安裝狀態。</p>
+          <button id="reset-all-btn" class="btn btn-danger"><svg class="icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg> 清除所有快取與資料</button>
+          <div id="reset-status" class="status-message"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 智慧匯入清單彈出視窗 (Modal) -->
+  <div id="import-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> 一鍵匯入您的 YouTube 訂閱頻道</h3>
+        <button id="close-modal-btn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="import-search-bar">
+          <input type="text" id="import-search-input" placeholder="🔍 輸入關鍵字篩選頻道名稱..." autocomplete="off">
+          <div class="import-selection-actions">
+            <button id="select-all-import-btn" class="btn btn-secondary btn-sm">全選</button>
+            <button id="deselect-all-import-btn" class="btn btn-secondary btn-sm">取消全選</button>
+          </div>
+        </div>
+        <div class="import-channels-container" id="import-channels-list">
+          <!-- 動態填充 -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span class="import-selected-count">已勾選 <strong id="selected-import-count">0</strong> 個頻道</span>
+        <div class="modal-footer-btns">
+          <button id="cancel-import-btn" class="btn btn-secondary">取消</button>
+          <button id="confirm-import-btn" class="btn btn-primary"><svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 確認批量匯入</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 全域自訂高級對話框 (Custom Dialog Modal) -->
+  <div id="custom-dialog-modal" class="modal-overlay">
+    <div class="modal-card dialog-card">
+      <div class="modal-header">
+        <h3 id="dialog-title"><svg class="icon" viewBox="0 0 24 24" style="color: var(--primary);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> 系統提示</h3>
+        <button id="dialog-close-btn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body dialog-body">
+        <p id="dialog-message"></p>
+      </div>
+      <div class="modal-footer dialog-footer">
+        <button id="dialog-cancel-btn" class="btn btn-secondary">取消</button>
+        <button id="dialog-confirm-btn" class="btn btn-primary">確認</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 提示框 (Toast) -->
+  <div id="toast" class="toast">提示訊息</div>
+
+  <!-- 引入控制邏輯腳本 -->
+  <script type="module" src="options.js"></script>
+</body>
+</html>

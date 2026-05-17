@@ -1,0 +1,760 @@
+/* YT Subscription Guard - YouTube Native DOM Injection Styling */
+
+/* ==========================================================================
+   首頁置頂防線專區 (#yt-guard-home-feed)
+   ========================================================================== */
+#yt-guard-home-feed {
+  width: 100%;
+  margin: 16px 0 24px 0;
+  background: rgba(28, 28, 38, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: feedSlideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 摺疊防線狀態 */
+#yt-guard-home-feed.collapsed {
+  padding-bottom: 12px;
+}
+#yt-guard-home-feed.collapsed .yt-guard-header {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+#yt-guard-home-feed.collapsed .yt-guard-groups-container {
+  display: none !important;
+}
+
+/* 亮色模式相容 */
+html[system-tracker-theme="LIGHT"] #yt-guard-home-feed,
+html:not([dark]) #yt-guard-home-feed {
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes feedSlideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 首頁 Header 列 */
+.yt-guard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 12px;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-header,
+html:not([dark]) .yt-guard-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.yt-guard-title-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.yt-guard-title-logo {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 0 8px rgba(255, 62, 85, 0.3));
+}
+
+.yt-guard-title-text h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-title-text h2,
+html:not([dark]) .yt-guard-title-text h2 {
+  color: #0f0f0f;
+}
+
+.yt-guard-title-text span {
+  font-size: 12px;
+  color: #aaa;
+  font-weight: 400;
+  display: block;
+  margin-top: 2px;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-title-text span,
+html:not([dark]) .yt-guard-title-text span {
+  color: #606060;
+}
+
+/* 「防禦中」小閃爍點 */
+.yt-guard-live-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #ff3e55;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px #ff3e55;
+  animation: liveBlink 1.5s infinite;
+}
+
+@keyframes liveBlink {
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.yt-guard-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* 網頁内按鈕樣式 */
+.yt-guard-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-btn,
+html:not([dark]) .yt-guard-btn {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: #0f0f0f;
+}
+
+.yt-guard-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.yt-guard-btn-primary {
+  background: linear-gradient(135deg, #ff3e55, #8a2be2);
+  border: none;
+  box-shadow: 0 4px 10px rgba(255, 62, 85, 0.2);
+}
+
+.yt-guard-btn-primary:hover {
+  box-shadow: 0 6px 15px rgba(255, 62, 85, 0.35);
+}
+
+/* ==========================================================================
+   首頁網格排版 (Bento Grid & Shelf Grouping)
+   ========================================================================== */
+.yt-guard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.yt-guard-groups-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-height: 480px; /* 固定最大高度，防止縱向擠壓 */
+  overflow-y: auto;  /* 啟用垂直滾動 */
+  padding-right: 8px; /* 保留滾動條寬度空間 */
+}
+
+/* 自訂高階 Chrome 滾動條 */
+.yt-guard-groups-container::-webkit-scrollbar {
+  width: 6px;
+}
+.yt-guard-groups-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.01);
+  border-radius: 10px;
+}
+.yt-guard-groups-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+.yt-guard-groups-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 62, 85, 0.5); /* 懸停時發出霓虹微光，視覺極致震撼 */
+}
+
+/* 亮色模式滾動條適應 */
+html[system-tracker-theme="LIGHT"] .yt-guard-groups-container::-webkit-scrollbar-track,
+html:not([dark]) .yt-guard-groups-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.01);
+}
+html[system-tracker-theme="LIGHT"] .yt-guard-groups-container::-webkit-scrollbar-thumb,
+html:not([dark]) .yt-guard-groups-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* Tier 1 / Tier 2 階級微章樣式 */
+.yt-guard-shelf-tier-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.yt-guard-shelf-tier-badge.tier-1 {
+  background: rgba(234, 179, 8, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  box-shadow: 0 0 8px rgba(234, 179, 8, 0.08);
+}
+
+.yt-guard-shelf-tier-badge.tier-2 {
+  background: rgba(255, 255, 255, 0.04);
+  color: #9ca3af;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-shelf-tier-badge.tier-2,
+html:not([dark]) .yt-guard-shelf-tier-badge.tier-2 {
+  background: rgba(0, 0, 0, 0.03);
+  color: #606060;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.yt-guard-shelf {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+  padding-bottom: 20px;
+}
+
+.yt-guard-shelf:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+html[system-tracker-theme="LIGHT"] #yt-guard-home-feed .yt-guard-shelf,
+html:not([dark]) #yt-guard-home-feed .yt-guard-shelf {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
+}
+
+.yt-guard-shelf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.yt-guard-shelf-channel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.yt-guard-shelf-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  object-fit: cover;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-shelf-avatar,
+html:not([dark]) .yt-guard-shelf-avatar {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.yt-guard-shelf-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-shelf-name,
+html:not([dark]) .yt-guard-shelf-name {
+  color: #0f0f0f;
+}
+
+.yt-guard-shelf-count {
+  font-size: 10px;
+  color: #aaa;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-shelf-count,
+html:not([dark]) .yt-guard-shelf-count {
+  color: #606060;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.yt-guard-shelf-dismiss-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #aaa;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.yt-guard-shelf-dismiss-btn:hover {
+  background: rgba(255, 62, 85, 0.1);
+  border-color: rgba(255, 62, 85, 0.3);
+  color: #ff3e55;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-shelf-dismiss-btn,
+html:not([dark]) .yt-guard-shelf-dismiss-btn {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: #606060;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-shelf-dismiss-btn:hover,
+html:not([dark]) .yt-guard-shelf-dismiss-btn:hover {
+  background: rgba(0, 0, 0, 0.03);
+  color: #ff3e55;
+}
+
+.yt-guard-shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+/* 注入影片卡片 */
+.yt-guard-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: cardFadeIn 0.4s ease forwards;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-card,
+html:not([dark]) .yt-guard-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.yt-guard-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 62, 85, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 24px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(255, 62, 85, 0.1);
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-card:hover,
+html:not([dark]) .yt-guard-card:hover {
+  background: #fff;
+  border-color: rgba(255, 62, 85, 0.25);
+  box-shadow: 
+    0 12px 24px rgba(0, 0, 0, 0.08),
+    0 0 10px rgba(255, 62, 85, 0.05);
+}
+
+/* 縮圖區域 */
+.yt-guard-thumb-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.yt-guard-thumb-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.yt-guard-card:hover .yt-guard-thumb-wrapper img {
+  transform: scale(1.04);
+}
+
+/* 置頂標籤 */
+.yt-guard-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: linear-gradient(135deg, #ff3e55, #8a2be2);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+/* 卡片詳情 */
+.yt-guard-details {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.yt-guard-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f3f4f6;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 40px;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-title,
+html:not([dark]) .yt-guard-title {
+  color: #0f0f0f;
+}
+
+.yt-guard-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.yt-guard-channel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.yt-guard-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.yt-guard-name {
+  font-size: 12px;
+  color: #9ca3af;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 110px;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-name,
+html:not([dark]) .yt-guard-name {
+  color: #606060;
+}
+
+.yt-guard-time {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* 一鍵已讀按鈕，首頁特有 */
+.yt-guard-dismiss-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 3;
+}
+
+.yt-guard-card:hover .yt-guard-dismiss-btn {
+  opacity: 1;
+}
+
+.yt-guard-dismiss-btn:hover {
+  background: #10b981;
+  border-color: #10b981;
+  transform: scale(1.1);
+}
+
+/* 抵禦成功 Placeholder */
+.yt-guard-victory-card {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px dashed rgba(16, 185, 129, 0.25);
+  border-radius: 16px;
+  animation: victoryPulse 3s infinite alternate;
+}
+
+@keyframes victoryPulse {
+  0% { box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.05); }
+  100% { box-shadow: inset 0 0 25px rgba(16, 185, 129, 0.15); }
+}
+
+.yt-guard-victory-icon {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+}
+
+.yt-guard-victory-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #10b981;
+  margin-bottom: 4px;
+}
+
+.yt-guard-victory-desc {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* ==========================================================================
+   播放頁側邊欄小工具 (#yt-guard-sidebar-feed)
+   ========================================================================== */
+#yt-guard-sidebar-feed {
+  width: 100%;
+  background: rgba(28, 28, 38, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+html[system-tracker-theme="LIGHT"] #yt-guard-sidebar-feed,
+html:not([dark]) #yt-guard-sidebar-feed {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.yt-guard-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-sidebar-header,
+html:not([dark]) .yt-guard-sidebar-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.yt-guard-sidebar-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-sidebar-title,
+html:not([dark]) .yt-guard-sidebar-title {
+  color: #0f0f0f;
+}
+
+.yt-guard-sidebar-badge {
+  font-size: 11px;
+  color: #ff3e55;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.yt-guard-sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 側邊欄緊湊影片行 */
+.yt-guard-sidebar-item {
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.yt-guard-sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-sidebar-item:hover,
+html:not([dark]) .yt-guard-sidebar-item:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.yt-guard-sidebar-thumb {
+  position: relative;
+  width: 90px;
+  aspect-ratio: 16/9;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.yt-guard-sidebar-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.yt-guard-sidebar-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  flex-grow: 1;
+}
+
+.yt-guard-sidebar-item-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f3f4f6;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-sidebar-item-title,
+html:not([dark]) .yt-guard-sidebar-item-title {
+  color: #0f0f0f;
+}
+
+.yt-guard-sidebar-channel-name {
+  font-size: 11px;
+  color: #9ca3af;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[system-tracker-theme="LIGHT"] .yt-guard-sidebar-channel-name,
+html:not([dark]) .yt-guard-sidebar-channel-name {
+  color: #606060;
+}
+
+/* 全域 SVG 向量圖示樣式 (用於 YouTube 網頁動態注入) */
+.yt-guard-icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, stroke 0.2s ease;
+}
+
+.yt-guard-title-logo .yt-guard-icon {
+  width: 26px;
+  height: 26px;
+  stroke-width: 1.8;
+  color: #ff3e55;
+  vertical-align: -5px;
+  filter: drop-shadow(0 0 6px rgba(255, 62, 85, 0.4));
+}
+
+.yt-guard-dismiss-btn .yt-guard-icon {
+  width: 12px;
+  height: 12px;
+  stroke-width: 3.2;
+}
+
+.yt-guard-sidebar-title .yt-guard-icon {
+  width: 15px;
+  height: 15px;
+  color: #ff3e55;
+  vertical-align: -2.5px;
+}
+
+/* ==========================================================================
+   防線摺疊收合 (Home Feed Collapse Styling)
+   ========================================================================== */
+#yt-guard-home-feed.collapsed .yt-guard-grid {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  padding: 0;
+  overflow: hidden;
+  display: none !important;
+}
+
+#yt-guard-home-feed.collapsed {
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+#yt-guard-home-feed.collapsed .yt-guard-header {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
