@@ -1,4 +1,4 @@
-# 🛡️ SubFirst (YouTube 訂閱置頂防線) — GitHub 發佈與打包指南
+# 🛡️ SubFirst (YouTube 訂閱優先) — GitHub 發佈與打包指南
 
 本文件旨在指導如何使用專案附帶的一鍵打包工具，並以最專業的姿態將 **SubFirst** 發佈到 GitHub Releases 中，供廣大開源社群與使用者下載使用。
 
@@ -44,7 +44,7 @@ git push -u origin main
 
 1. 開啟您的 GitHub 專案網頁，在右側欄尋找並點擊 **「Create a new release」**（或進入 `Releases` 分頁點選 `Draft a new release`）。
 2. **設定 Tag 版本號**：點選 `Choose a tag`，輸入 **`v1.0.0`** 並點選建立。
-3. **設定標題 (Release Title)**：輸入 **`v1.0.0 — 🛡️ SubFirst 訂閱置頂防線正式開源！`**。
+3. **設定標題 (Release Title)**：輸入 **`v1.0.0 — 🛡️ SubFirst 訂閱優先正式開源！`**。
 4. **撰寫發佈日誌 (Release Notes)**：您可以直接複製下方我們為您編寫的 **「發佈日誌豪華 Markdown 模板」**。
 5. **上傳發行 ZIP 包**：將本機剛剛生成的 **`subfirst.zip`** 滑鼠拖拽丟進下方 `Attach binaries by dropping them here` 上傳區域中。
 6. 點擊最下方的 **「Publish release」** 大綠色按鈕，大功告成！🎉
@@ -56,7 +56,7 @@ git push -u origin main
 ```markdown
 # 🛡️ SubFirst v1.0.0 — 重塑您的 YouTube 純淨首頁，徹底終結演算法支配！
 
-我們非常興奮地宣布，**SubFirst (YouTube 訂閱置頂防線)** 版本 1.0.0 正式對外開源！
+我們非常興奮地宣布，**SubFirst (YouTube 訂閱優先)** 版本 1.0.0 正式對外開源！
 
 SubFirst 是一款專為「奪回注意力控制權」而設計的 Chrome 瀏覽器高效擴充功能。它繞過 YouTube 複雜繁瑣的推薦演算法，直接將您「核心關注」與「次要關注」頻道的最新影片，以高雅精緻的 Bento 展示架形式，注入到 YouTube 首頁的最頂端！
 

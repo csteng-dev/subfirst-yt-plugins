@@ -159,7 +159,7 @@
         <div class="yt-guard-title-area">
           <span class="yt-guard-title-logo"><svg class="yt-guard-icon" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6z"/></svg></span>
           <div class="yt-guard-title-text">
-            <h2>訂閱置頂防線 <span class="yt-guard-live-dot" title="安全防護中"></span></h2>
+            <h2>訂閱優先 <span class="yt-guard-live-dot" title="安全防護中"></span></h2>
             <span>已成功為您屏蔽演算法，優先展示關注頻道的最新影片 ${allVideos.length > 0 ? `(共 ${allVideos.length} 部未讀)` : ""}</span>
           </div>
         </div>
@@ -400,7 +400,7 @@
       const header = document.createElement("div");
       header.className = "yt-guard-sidebar-header";
       header.innerHTML = `
-        <span class="yt-guard-sidebar-title"><svg class="yt-guard-icon" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6z"/></svg> 訂閱置頂防線</span>
+        <span class="yt-guard-sidebar-title"><svg class="yt-guard-icon" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6z"/></svg> 訂閱優先</span>
         <span class="yt-guard-sidebar-badge"><svg class="yt-guard-icon" viewBox="0 0 24 24" style="width: 11px; height: 11px; fill: #ff3e55; stroke: #ff3e55; vertical-align: -1.5px; margin-right: 2px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 核心未讀 (${videos.length})</span>
       `;
       sidebarContainer.appendChild(header);
