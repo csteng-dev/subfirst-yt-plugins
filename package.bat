@@ -1,28 +1,28 @@
 @echo off
-title YT Subscription Guard Packager
+title SubFirst Packager
 color 0a
 
 echo =======================================================
-echo     YT Subscription Guard - Auto-Package Release Tool
+echo     SubFirst - Auto-Package Release Tool
 echo =======================================================
 echo.
 echo Packaging core assets to release ZIP file...
 echo.
 
 :: Detect and clean old zip packages
-if exist yt-subscription-guard.zip (
+if exist subfirst.zip (
     echo Cleaning up old archive...
-    del /f /q yt-subscription-guard.zip
+    del /f /q subfirst.zip
 )
 
 :: Run PowerShell compression engine
-powershell -NoProfile -Command "Compress-Archive -Path 'manifest.json', 'assets', 'background', 'content', 'options', 'popup', 'LICENSE', 'README.md' -DestinationPath 'yt-subscription-guard.zip' -Force"
+powershell -NoProfile -Command "Compress-Archive -Path 'manifest.json', 'assets', 'background', 'content', 'options', 'popup', 'LICENSE', 'README.md' -DestinationPath 'subfirst.zip' -Force"
 
 if %errorlevel% equ 0 (
     echo.
     echo =======================================================
     echo    SUCCESS! Release package generated:
-    echo    =^> yt-subscription-guard.zip
+    echo    =^> subfirst.zip
     echo =======================================================
 ) else (
     echo.

@@ -76,3 +76,6 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Zip archives
+*.zip
