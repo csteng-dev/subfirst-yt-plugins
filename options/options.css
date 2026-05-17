@@ -1064,3 +1064,62 @@ html[system-tracker-theme="LIGHT"] .checkbox-custom {
   border-top: 1px solid var(--border-color) !important;
 }
 
+/* ==========================================================================
+   開發者頁尾樣式 (Sidebar Developer Footer)
+   ========================================================================== */
+.sidebar-footer {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-dev {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-dev span {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dev-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-smooth);
+}
+
+.dev-link:hover {
+  color: var(--primary);
+  transform: translateX(2px);
+}
+
+.footer-icon {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  transition: var(--transition-smooth);
+}
+
+.dev-link:hover .footer-icon {
+  filter: drop-shadow(0 0 4px var(--primary-glow));
+}
+
+.footer-ver {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+

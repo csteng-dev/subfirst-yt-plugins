@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "SubFirst — YouTube 訂閱優先",
   "version": "1.0.0",
+  "author": "SubFirst Open Source Community",
   "description": "繞過 YouTube 演算法！訂閱分級置頂、自動背景同步，直接在首頁最頂端與側邊欄插入您核心關注頻道的最新影片，並即時提醒您！",
   "permissions": [
     "storage",
