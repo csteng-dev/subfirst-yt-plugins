@@ -32,7 +32,7 @@ git commit -m "feat: initial open source release of SubFirst v1.0.0"
 git branch -M main
 
 # 5. 連結您 GitHub 的遠端倉庫 (請將下方網址替換為您的真實 GitHub 網址)
-git remote add origin https://github.com/您的帳號/subfirst.git
+git remote add origin https://github.com/csteng-dev/subfirst-yt-plugins.git
 
 # 6. 強力推送代碼至 GitHub
 git push -u origin main
