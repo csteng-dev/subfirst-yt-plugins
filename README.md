@@ -2,7 +2,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform: Chrome / Edge](https://img.shields.io/badge/Platform-Chrome%20%7C%20Edge-blue.svg)](#)
-[![CI/CD: GitHub Actions](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-brightgreen.svg)](file:///k:/yt-plugins/.github/workflows/release.yml)
 
 這是一款專為「奪回注意力控制權」而生、基於 **Chrome Extension Manifest V3** 規範打造的頂級瀏覽器擴充功能。
 
@@ -74,9 +73,6 @@
 
 ```text
 subfirst/
-├── .github/                  # GitHub 開源自動化工作流
-│   └── workflows/
-│       └── release.yml       # 推送 Tag 自動打包發佈 Release 腳本
 ├── assets/                   # 套件圖示、美術資源與截圖
 ├── background/               # Service Worker 定時後台同步引擎 (background.js)
 ├── content/                  # YouTube UI 注入腳本 (content.js) 與樣式表 (content.css)
@@ -86,27 +82,6 @@ subfirst/
 ├── LICENSE                   # MIT 授權條款
 └── README.md                 # 專案說明書 (您目前的位置)
 ```
-
----
-
-## 🤖 CI/CD 自動化打包與發佈 (GitHub Actions)
-
-我們已經為本專案部署了完美的 GitHub Actions 工作流。當您需要發佈新版本時，完全不需要在本機手動打包或上傳，只需以下簡單步驟：
-
-1. **推送代碼至 GitHub**：
-   ```bash
-   git add .
-   git commit -m "feat: complete release of SubFirst v1.0.0"
-   git push origin main
-   ```
-2. **在本地端標註版本號並推送 Tag**：
-   ```bash
-   git tag v1.0.0
-   git push origin v1.0.0
-   ```
-3. **見證自動化奇蹟**：
-   * GitHub Actions 將自動在雲端喚醒，運行原生 `zip` 封裝，編譯生成純淨的 `subfirst.zip`。
-   * 自動以 `v1.0.0` 為名建立 Release，自動套用發佈日誌模板，並自動將 `subfirst.zip` 掛載為 Release 附件！
 
 ---
 

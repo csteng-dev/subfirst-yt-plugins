@@ -14,25 +14,6 @@
 
 ---
 
-## 🤖 進階推薦：GitHub Actions 全自動打包與發佈 (推薦)
-
-我們已經為您部署了完美的 GitHub Actions 自動化工作流 [release.yml](file:///k:/yt-plugins/.github/workflows/release.yml)！現在，您完全不需要在本地手動打包或上傳，只需以下簡單步驟：
-
-1. **推送代碼至 GitHub**（參考下方第二步）。
-2. **在本地端標註版本號並推送到 GitHub**：
-   ```bash
-   # 1. 建立版本標籤
-   git tag v1.0.0
-
-   # 2. 推送標籤至 GitHub
-   git push origin v1.0.0
-   ```
-3. **見證自動化奇蹟**：
-   * GitHub Actions 將自動在雲端喚醒，運行原生 `zip` 封裝，編譯生成純淨的 `subfirst.zip`。
-   * 自動以 `v1.0.0` 為名建立 Release，自動套用發佈日誌模板，並自動將 `subfirst.zip` 掛載為 Release 附件！
-
----
-
 ## 🚀 第二步：推送代碼至 GitHub 倉庫
 
 在您的 GitHub 帳號下建立一個新的 Repository（建議命名為 `subfirst`），然後在終端機中依序執行以下指令推送代碼：
